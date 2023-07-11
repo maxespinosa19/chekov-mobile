@@ -11,5 +11,5 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig)
-export const Auth = getAuth(app) // need app inside for react native
+export const auth = getAuth(app) // need app inside for react native
 
