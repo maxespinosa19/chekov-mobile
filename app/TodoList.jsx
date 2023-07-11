@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Center, Box, Heading, VStack, Checkbox, HStack, Text } from "native-base";
+import { Center, Box, VStack, Checkbox, HStack, Text } from "native-base";
+import TodoHeader from "./TodoHeader";
 
 export default function TodoList({user}) {
 
@@ -15,7 +16,8 @@ export default function TodoList({user}) {
   return (
  <Center w="100%">
     <Box maxW={300} w="100%">
-   <VStack space={4}>
+   <VStack space={4} mt={4}>
+    <TodoHeader user={user} setTodoItems={setTodoItems}/>
     {!todoItems 
     ?<Text fontSize="xl" color="coolGray.300" textAlign='center'> Loading...</Text>
     : todoItems.map(item => (
