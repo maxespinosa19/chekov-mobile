@@ -12,7 +12,25 @@ export default function TodoList({user}) {
             .then(setTodoItems)
             .catch(alert)
         }
-    }, [user])
+    }, [user]);
+    
+    const handleItemUpdate= (id, done) => {
+        const itemUpdate = {id, done: !done}
+
+        fetch(`https://chekov-api-me.web.app/tasks/${user.uid}` , {
+            method: 'PATCH',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(itemUpdate)
+
+        })
+        .then(res => res.json())
+        .then(data => {
+            setTodoItems(data)
+        })
+        .catch(alert)
+    }
   return (
  <Center w="100%">
     <Box maxW={300} w="100%">
@@ -24,13 +42,16 @@ export default function TodoList({user}) {
         <HStack key={item.id} w="100%" justifyContent="space-between" alignItems="center">
             <Checkbox 
             aria-label={item.title}
-            isChecked={item.done} />
+            isChecked={item.done} 
+            onChange={ () => handleItemUpdate(item.id, item.done)}/>
             <Text fontSize={18}
+            onPress={ () => handleItemUpdate(item.id, item.done)}
              mx={2}
              strikeThrough={item.done}
              color={item.done ? 'coolGray.500' : 'coolGray.100'}
              textAlign='left'
              width='100%'
+
              >{item.title}</Text>
         </HStack>
     ) )
