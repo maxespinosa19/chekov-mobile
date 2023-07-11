@@ -31,6 +31,26 @@ export default function TodoList({user}) {
         })
         .catch(alert)
     }
+
+    const handleItemDelete = (id) => {
+        const itemDelete = {id}
+
+        fetch(`https://chekov-api-me.web.app/tasks/${user.uid}`,{
+            method: 'DELETE',
+            headers:{
+                'Content-type': 'application/json'
+
+            },
+            body: JSON.stringify(itemDelete)
+        })
+            .then(res => res.json())
+            .then( data => {
+                setTodoItems(data)
+            })
+            .catch(alert)
+
+      
+    }
   return (
  <Center w="100%">
     <Box maxW={300} w="100%">
@@ -50,9 +70,14 @@ export default function TodoList({user}) {
              strikeThrough={item.done}
              color={item.done ? 'coolGray.500' : 'coolGray.100'}
              textAlign='left'
-             width='100%'
+             width='50%'
 
              >{item.title}</Text>
+             <Text fontSize={18} 
+             mx={2} 
+             textAlign='right' 
+             color={"coolGray.400"}
+             onPress={() => handleItemDelete(item.id)}>🗑️</Text>
         </HStack>
     ) )
     }
